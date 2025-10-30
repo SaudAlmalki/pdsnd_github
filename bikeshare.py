@@ -167,25 +167,24 @@ def trip_duration_stats(df):
 
 def user_stats(df):
     """
-    Display statistics on bikeshare users, including user type, gender, and birth year if available.
+    Display statistics on bikeshare users efficiently using get() to check optional columns.
     """
     print('\nCalculating User Stats...\n')
-    start_time = time.time()
+    start = time.perf_counter()
 
-    # Display counts of user types
     print('User Types:\n', df['User Type'].value_counts())
 
-    # Display counts of gender (if available)
-    if 'Gender' in df.columns:
-        print('\nGender Count:\n', df['Gender'].value_counts())
+    gender = df.get('Gender')
+    if gender is not None:
+        print('\nGender Count:\n', gender.value_counts())
 
-    # Display earliest, most recent, and most common year of birth (if available)
-    if 'Birth Year' in df.columns:
-        print('\nEarliest Year:', int(df['Birth Year'].min()))
-        print('Most Recent Year:', int(df['Birth Year'].max()))
-        print('Most Common Year:', int(df['Birth Year'].mode()[0]))
+    birth_year = df.get('Birth Year')
+    if birth_year is not None:
+        print('\nEarliest Year:', int(birth_year.min()))
+        print('Most Recent Year:', int(birth_year.max()))
+        print('Most Common Year:', int(birth_year.mode()[0]))
 
-    print(f"\nThis took {time.time() - start_time:.2f} seconds.")
+    print(f"\nThis took {time.perf_counter() - start:.2f} seconds.")
     print('-' * 40)
 
 
