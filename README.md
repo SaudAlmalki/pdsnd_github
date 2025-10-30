@@ -25,3 +25,8 @@ The goal is to provide insights on travel patterns, popular stations, and trip d
 ### Data Note
 
 Note: The CSV data files (chicago.csv, new_york_city.csv, washington.csv) are excluded from this repository using .gitignore.
+### Dependencies
+
+- Python 3.x
+- pandas library
+- numpy library
