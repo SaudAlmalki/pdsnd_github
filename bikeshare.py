@@ -137,60 +137,61 @@ def time_stats(df):
 
 def station_stats(df):
     """
-    Display statistics on the most popular stations and trips.
+    Display statistics on the most popular stations and trips efficiently.
     """
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
-    # Display most commonly used start station
-    print('Most Common Start Station:', df['Start Station'].mode()[0])
-
-    # Display most commonly used end station
-    print('Most Common End Station:', df['End Station'].mode()[0])
-
-    # Display most frequent combination of start and end stations
+    # Calculate most common start and end stations and trip in one go
     df['Trip'] = df['Start Station'] + " → " + df['End Station']
-    print('Most Common Trip:', df['Trip'].mode()[0])
+    most_common = df.agg({
+        'Start Station': lambda x: x.mode()[0],
+        'End Station': lambda x: x.mode()[0],
+        'Trip': lambda x: x.mode()[0]
+    })
+
+    print('Most Common Start Station:', most_common['Start Station'])
+    print('Most Common End Station:', most_common['End Station'])
+    print('Most Common Trip:', most_common['Trip'])
 
     print(f"\nThis took {time.time() - start_time:.2f} seconds.")
     print('-' * 40)
 
-
 def trip_duration_stats(df):
     """
-    Display statistics on the total and average trip duration.
+    Display total and average trip duration more efficiently.
     """
     print('\nCalculating Trip Duration...\n')
-    start_time = time.time()
+    start = time.perf_counter()
 
-    print('Total Travel Time:', df['Trip Duration'].sum())
-    print('Average Travel Time:', df['Trip Duration'].mean())
+    total_time = df['Trip Duration'].sum()
+    avg_time = df['Trip Duration'].mean()
+    print(f'Total Travel Time: {total_time}, Average Travel Time: {avg_time}')
 
-    print(f"\nThis took {time.time() - start_time:.2f} seconds.")
+    print(f"\nThis took {time.perf_counter() - start:.2f} seconds.")
     print('-' * 40)
 
 
 def user_stats(df):
     """
-    Display statistics on bikeshare users, including user type, gender, and birth year if available.
+    Display statistics on bikeshare users efficiently using get() to check optional columns.
     """
     print('\nCalculating User Stats...\n')
-    start_time = time.time()
+    start = time.perf_counter()
 
-    # Display counts of user types
     print('User Types:\n', df['User Type'].value_counts())
 
-    # Display counts of gender (if available)
-    if 'Gender' in df.columns:
-        print('\nGender Count:\n', df['Gender'].value_counts())
+    gender = df.get('Gender')
+    if gender is not None:
+        print('\nGender Count:\n', gender.value_counts())
 
-    # Display earliest, most recent, and most common year of birth (if available)
-    if 'Birth Year' in df.columns:
-        print('\nEarliest Year:', int(df['Birth Year'].min()))
-        print('Most Recent Year:', int(df['Birth Year'].max()))
-        print('Most Common Year:', int(df['Birth Year'].mode()[0]))
+    birth_year = df.get('Birth Year')
+    if birth_year is not None:
+        print('\nEarliest Year:', int(birth_year.min()))
+        print('Most Recent Year:', int(birth_year.max()))
+        print('Most Common Year:', int(birth_year.mode()[0]))
 
-    print(f"\nThis took {time.time() - start_time:.2f} seconds.")
+    print(f"\nThis took {time.perf_counter() - start:.2f} seconds.")
     print('-' * 40)
 
 
