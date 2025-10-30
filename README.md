@@ -17,3 +17,8 @@ It's important to give proper credit. Add links to any repo that inspired you or
 
 # US Bikeshare Data Analysis Project
 
+### Project Goal
+
+This project analyzes bikeshare data from three US cities: Chicago, New York City, and Washington.  
+The goal is to provide insights on travel patterns, popular stations, and trip durations.
+
