@@ -11,13 +11,20 @@ CITY_DATA = {
 
 def get_filters():
     """
-    Ask user to specify a city, month, and day to analyze.
-    Allows combined filtering by both month and day.
+    Asks the user to specify a city, month, and day to analyze bikeshare data.
+    Supports combined filtering by both month and day.
+
+    The function prompts the user for input and validates the responses
+    to ensure they match the available options.
 
     Returns:
-        city (str): selected city name
-        month (str): selected month or 'all' for no filter
-        day (str): selected day or 'all' for no filter
+        city (str): Name of the city to analyze (Chicago, New York City, Washington)
+        month (str): Name of the month to filter by, or 'all' for no month filter
+        day (str): Name of the day of the week to filter by, or 'all' for no day filter
+
+    Example:
+        city, month, day = get_filters()
+        print(city, month, day)
     """
     print("Hello! Let's explore some US bikeshare data!")
 
